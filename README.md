@@ -12,7 +12,7 @@
 
 </div>
 
-</br></br>
+</br>
 
 <div align="left">
   <h1 id="sobre-o-desafio"> ✅ Sobre o projeto </h1>
@@ -32,10 +32,10 @@
 >
   <img 
     src=".github/project_print.png" 
-    height="300px" 
+    height="400px" 
     style="object-fit: contain"
   />
-  <small>Apresentação do projeto</small>
+  <p>Apresentação do projeto</p>
 </div>
 
 </br>
