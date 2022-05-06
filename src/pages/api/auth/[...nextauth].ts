@@ -23,12 +23,27 @@ export default NextAuth({
       const { email } = user;
 
       try {
+        const match_by_email_faunadb = query.Match(
+          query.Index('user_by_email'),
+          query.Casefold(email)
+        );
+
         await faunadb.query(
-          query.Create(
-            query.Collection('users'),
-            {data: {
-              email
-            }}
+          query.If(
+            query.Not(
+              query.Exists(
+                match_by_email_faunadb
+              )
+            ),
+            query.Create(
+              query.Collection('users'),
+              {data: {
+                email
+              }}
+            ),
+            query.Get(
+              match_by_email_faunadb
+            )
           )
         );
 
