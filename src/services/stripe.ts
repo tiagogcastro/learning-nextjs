@@ -10,3 +10,5 @@ export const stripe = new Stripe(
     }
   }
 );
+
+export const prices_id = 'price_1KvMEvD3Try4VPfGgV5sfL32';
