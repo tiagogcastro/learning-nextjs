@@ -51,7 +51,6 @@ export async function saveSubscription(
       )
     );
   } else {
-    console.log('else');
     try {
       const subscription = await faunadb.query<Subscription>( 
         query.Get(
@@ -73,7 +72,7 @@ export async function saveSubscription(
         )
       );
     } catch (e) {
-      console.log({e});
+      return null;
     }
   }
 }
