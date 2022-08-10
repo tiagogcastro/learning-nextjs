@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 
@@ -23,6 +24,14 @@ interface PostsProps {
 export default function Posts({
   posts
 }: PostsProps) {
+  const { data: session } = useSession();
+
+  function redirectToPost(post: Post) {
+    return session?.activeSubscription
+      ? `/posts/${post.slug}`
+      : `/posts/preview/${post.slug}`
+  }
+
   return (
     <>
       <Head>
@@ -32,7 +41,7 @@ export default function Posts({
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => (
-            <Link href={`/posts/${post.slug}`} key={post.id}>
+            <Link href={redirectToPost(post)} key={post.id}>
               <a>
                 <time>{post.updatedAt}</time>
                 <strong>{post.title}</strong>
