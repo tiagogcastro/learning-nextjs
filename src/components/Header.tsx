@@ -60,7 +60,7 @@ export function Header() {
           py="1"
           color="gray.300"
           borderRightWidth={1}
-          bgColor="gray.700"
+          borderColor="gray.700"
         >
           <Icon as={RiNotificationLine} fontSize="20" />
           <Icon as={RiUserAddLine} fontSize="20" />
