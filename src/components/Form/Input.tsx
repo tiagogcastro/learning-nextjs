@@ -19,7 +19,7 @@ export function Input({
   return (
     <FormControl>
       {!!label && (
-        <FormLabel htmlFor='email'>E-mail</FormLabel>
+        <FormLabel htmlFor='email'>{label}</FormLabel>
       )}
       <ChakraInput
         id={name}
