@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { Button, Flex, Stack } from '@chakra-ui/react';
 import { Input } from '../components/Form/Input';
+import Head from 'next/Head';
 
 type SignInFormData = {
   email: string;
@@ -33,49 +34,54 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Flex
-      w="100vw"
-      h="100vh"
-      align="center"
-      justify="center"
-    >
+    <>
+      <Head>
+        <title>Home - Login</title>
+      </Head>
       <Flex
-        as="form"
-        w="100%"
-        maxW={360}
-        bg="gray.800"
-        p="8"
-        borderRadius={8}
-        flexDirection="column"
-        onSubmit={handleSubmit(handleSignIn)}
+        w="100vw"
+        h="100vh"
+        align="center"
+        justify="center"
       >
-        <Stack
-          spacing="4"
+        <Flex
+          as="form"
+          w="100%"
+          maxW={360}
+          bg="gray.800"
+          p="8"
+          borderRadius={8}
+          flexDirection="column"
+          onSubmit={handleSubmit(handleSignIn)}
         >
-          <Input 
-            type="email"
-            label="E-mail"
-            error={signInErrors.email}
-            {...register('email')}
-          />
-          <Input 
-            type="password"
-            label="Password"
-            error={signInErrors.password}
-            {...register('password')}
-          />
-        </Stack>
-        <Button 
-          type="submit"
-          mt="6"
-          colorScheme="pink"
-          size="lg"
-          isLoading={formState.isSubmitting}
-        >
-          Entrar
-        </Button>
+          <Stack
+            spacing="4"
+          >
+            <Input 
+              type="email"
+              label="E-mail"
+              error={signInErrors.email}
+              {...register('email')}
+            />
+            <Input 
+              type="password"
+              label="Password"
+              error={signInErrors.password}
+              {...register('password')}
+            />
+          </Stack>
+          <Button 
+            type="submit"
+            mt="6"
+            colorScheme="pink"
+            size="lg"
+            isLoading={formState.isSubmitting}
+          >
+            Entrar
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   )
 }
 
