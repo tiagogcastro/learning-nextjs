@@ -1,16 +1,30 @@
 import type { NextPage } from 'next';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { Button, Flex, Stack } from '@chakra-ui/react';
 import { Input } from '../components/Form/Input';
-import { SubmitHandler, useForm } from 'react-hook-form';
 
 type SignInFormData = {
   email: string;
   password: string;
 }
 
+const signInFormSchema = yup.object().shape({
+  email: yup.string()
+    .required('E-mail obrigatório')
+    .email('E-mail inválido'),
+  password: yup.string()
+    .required('Senha obrigatória'),
+});
+
 const Home: NextPage = () => {
-  const { register, handleSubmit, formState } = useForm<SignInFormData>();
+  const { register, handleSubmit, formState } = useForm<SignInFormData>({
+    resolver: yupResolver(signInFormSchema),
+  });
+
+  const signInErrors = formState.errors;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -41,11 +55,13 @@ const Home: NextPage = () => {
           <Input 
             type="email"
             label="E-mail"
+            error={signInErrors.email}
             {...register('email')}
           />
           <Input 
             type="password"
             label="Password"
+            error={signInErrors.password}
             {...register('password')}
           />
         </Stack>
