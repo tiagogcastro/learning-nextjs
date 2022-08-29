@@ -1,32 +1,15 @@
 import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from '@chakra-ui/react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useQuery } from 'react-query';
 
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
+import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3000/api/users');
-
-    const data = await response.json();
-
-    const users = data.users.map(user => {
-      return {
-        ...user,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        }),
-      };
-    });
-
-    return users;
-  });
+  const { data, isFetching, isLoading, error } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -68,6 +51,10 @@ export default function UserList() {
                 fontWeight="normal"
               >
                 Usuários
+
+                {!isLoading && isFetching && (
+                  <Spinner size="sm" color="gray.500" ml="4"/>
+                )}
               </Heading>
 
             <Link href="/users/create" passHref>
@@ -113,7 +100,7 @@ export default function UserList() {
                   </Thead>
 
                   <Tbody>
-                    {data.map(user => (
+                    {data?.map(user => (
                       <Tr key={user.id}>
                         <Td px={["4", "4", "6"]}>
                           <Checkbox colorScheme="pink"/>
