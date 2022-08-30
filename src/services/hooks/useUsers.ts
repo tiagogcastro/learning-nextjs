@@ -45,7 +45,7 @@ interface UseUsersProps {
 
 function useUsers({ page }: UseUsersProps) {
   return useQuery(['users', page], () => getUsers(page), {
-    staleTime: 10000 * 5, // 5 seconds
+    staleTime: 1000 * 60 * 10 , // 10 minutes
   });
 }
 
